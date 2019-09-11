@@ -177,10 +177,11 @@ func (c *SSTCPConn) doRead(b []byte) (n int, err error) {
 	c.readEncryptBuf.Write(buf)
 	encryptbuf := c.readEncryptBuf.Bytes()
 	c.readEncryptBuf.Reset()
-	postDecryptedData, length, err := c.IProtocol.PostDecrypt(encryptbuf)
+	postDecryptedData, _, err := c.IProtocol.PostDecrypt(encryptbuf)
 	if err != nil {
 		return 0, err
 	}
+	length := len(postDecryptedData)
 	if length == 0 {
 		c.readEncryptBuf.Write(encryptbuf)
 		return 0, nil
