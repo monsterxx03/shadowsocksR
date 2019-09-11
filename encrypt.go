@@ -13,7 +13,7 @@ import (
 	"github.com/sun8911879/shadowsocksR/tools"
 	"github.com/sun8911879/shadowsocksR/tools/leakybuf"
 
-	"github.com/Yawning/chacha20"
+	"github.com/aead/chacha20"
 	"github.com/dgryski/go-camellia"
 	"github.com/dgryski/go-idea"
 	"github.com/dgryski/go-rc2"
@@ -96,11 +96,11 @@ func newRC4MD5Stream(key, iv []byte, _ DecOrEnc) (cipher.Stream, error) {
 }
 
 func newChaCha20Stream(key, iv []byte, _ DecOrEnc) (cipher.Stream, error) {
-	return chacha20.NewCipher(key, iv)
+	return chacha20.NewCipher(iv, key)
 }
 
 func newChacha20IETFStream(key, iv []byte, _ DecOrEnc) (cipher.Stream, error) {
-	return chacha20.NewCipher(key, iv)
+	return chacha20.NewCipher(iv, key)
 }
 
 type salsaStreamCipher struct {
